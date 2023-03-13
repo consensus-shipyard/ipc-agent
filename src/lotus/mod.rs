@@ -97,4 +97,19 @@ pub trait LotusClient {
 
     /// Returns the list of subnets in a gateway.
     async fn ipc_list_child_subnets(&self, gateway_addr: Address) -> Result<Vec<SubnetInfo>>;
+
+    /// Returns the checkpoint for `epoch` if a checkpoint has been committed for that epoch.
+    /// Otherwise, it returns `None`.
+    async fn ipc_get_checkpoint(
+        &self,
+        child_subnet_id: SubnetID,
+        epoch: ChainEpoch,
+    ) -> Result<Option<Checkpoint>>;
+
+    /// Returns the votes for a checkpoint.
+    async fn ipc_get_votes_for_checkpoint(
+        &self,
+        child_subnet_id: SubnetID,
+        cid: Cid,
+    ) -> Result<Vec<String>>;
 }
